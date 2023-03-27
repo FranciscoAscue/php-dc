@@ -1,8 +1,45 @@
+<?php include("../../database.php");
+
+
+$sentencia = $conn->prepare("SELECT * FROM `caracteristicas`");
+$sentencia->execute();
+$lista_puesto = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
+
+if($_POST){
+    print_r($_POST);
+    print_r($_FILES);
+
+    $nombre = (isset($_POST['nombre'])?$_POST['nombre']:"");
+
+    $foto = (isset($_FILES['foto']['name'])?$_FILES['foto']['name']:"");
+    $cv = (isset($_FILES['cv']['name'])?$_FILES['cv']['name']:"");
+
+    $puesto = (isset($_POST['puesto'])?$_POST['puesto']:"");
+    $date = (isset($_POST['date'])?$_POST['date']:"");
+
+    $sentencia = $conn -> prepare("INSERT INTO 
+    `registro`(`id`,`nombre`,`foto`,`cv`,`id_puesto`,`fecha`) 
+    VALUES (null,:nombre,:foto,:cv,:puesto,:fecha );");
+
+    $sentencia -> bindParam(":nombre", $nombre);
+    $sentencia -> bindParam(":foto", $foto);
+    $sentencia -> bindParam(":cv", $cv);
+    $sentencia -> bindParam(":puesto", $puesto);  
+    $sentencia -> bindParam(":fecha", $date);
+
+    $sentencia -> execute();
+
+    header("Location:index.php");
+
+}
+?>
+
+
 <?php include("../../templates/header.php"); ?>
 
 <div class="card">
     <div class="card-header">
-        Datps del Empleado
+        Datos del Empleado
     </div>
     <div class="card-body">
         <form action="" method="post" enctype="multipart/form-data">
@@ -12,26 +49,11 @@
                 class="form-control" name="nombre" id="nombre" 
                 aria-describedby="helpId" placeholder="Juan">
             </div>
-
-            <div class="mb-3">
-              <label for="apellido" class="form-label">Apellidos</label>
-              <input type="text"
-                class="form-control" name="apellido" id="apellido" 
-                aria-describedby="helpId" placeholder="Perez">
-            </div>
-
             <div class="mb-3">
               <label for="foto" class="form-label">Foto</label>
               <input type="file"
                 class="form-control" name="foto" id="foto" 
                 aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-              <label for="cv" class="form-label">Archivo de CV</label>
-              <input type="text"
-                class="form-control" name="cv" id="cv" 
-                aria-describedby="helpId" placeholder="Juan">
             </div>
 
             <div class="mb-3">
@@ -44,10 +66,12 @@
            <div class="mb-3">
             <label for="puesto" class="form-label">Puesto</label>
             <select class="form-select form-select-sm" name="puesto" id="puesto">
-                <option selected>Select one</option>
-                <option value="">New Delhi</option>
-                <option value="">Istanbul</option>
-                <option value="">Jakarta</option>
+              <option value="NULL" selected>Seleccionar Uno</option>
+              <?php foreach($lista_puesto as $puestos){ ?>
+                <option value="<?php echo $puestos["id_puesto"];?>">
+                <?php echo $puestos["puesto"];?>
+                </option>
+                <?php } ?>
             </select>
            </div>
 
