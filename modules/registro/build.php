@@ -22,15 +22,29 @@ if($_POST){
     VALUES (null,:nombre,:foto,:cv,:puesto,:fecha );");
 
     $sentencia -> bindParam(":nombre", $nombre);
-    $sentencia -> bindParam(":foto", $foto);
-    $sentencia -> bindParam(":cv", $cv);
+
+    $fecha = new DateTime();    
+    $nombre_archivo_foto = ($foto!='')?$fecha->getTimestamp()."_".$_FILES['foto']['name']:"";
+    $tmp_foto = $_FILES["foto"]["tmp_name"];
+    if($tmp_foto!=""){
+      move_uploaded_file($tmp_foto,"./".$nombre_archivo_foto);
+    }
+    $sentencia -> bindParam(":foto", $nombre_archivo_foto);
+
+    $nombre_archivo_cv = ($foto!='')?$fecha->getTimestamp()."_".$_FILES['cv']['name']:"";
+    $tmp_cv = $_FILES["cv"]["tmp_name"];
+    if($tmp_cv!=""){
+      move_uploaded_file($tmp_cv,"./".$nombre_archivo_cv);
+    }
+
+    $sentencia -> bindParam(":cv", $nombre_archivo_cv);
     $sentencia -> bindParam(":puesto", $puesto);  
     $sentencia -> bindParam(":fecha", $date);
 
     $sentencia -> execute();
 
-    header("Location:index.php");
-
+    $mensaje="Registro creado!";
+    header("Location:index.php?mensaje=".$mensaje);
 }
 ?>
 
