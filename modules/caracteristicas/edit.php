@@ -17,8 +17,8 @@ if ($_POST) {
     $sentencia->bindParam(":puesto", $nombrepuesto);
     $sentencia->bindParam(":id", $id);
     $sentencia->execute();
-    header("Location:index.php");
-}
+    $mensaje="Puesto Actualizado!";
+    header("Location:index.php?mensaje=".$mensaje);}
 
 ?>
 

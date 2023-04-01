@@ -10,9 +10,8 @@ if($_POST){
 
     $sentencia -> bindParam(":puesto", $nombrepuesto);
     $sentencia -> execute();
-
-    header("Location:index.php");
-
+    $mensaje="Puesto Agregado!";
+    header("Location:index.php?mensaje=".$mensaje);
 }
 ?>
 

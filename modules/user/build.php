@@ -16,8 +16,8 @@ if ($_POST) {
 
     $sentencia->execute();
 
-    header("Location:index.php");
-
+    $mensaje="Usuario creado!";
+    header("Location:index.php?mensaje=".$mensaje);
 }
 ?>
 

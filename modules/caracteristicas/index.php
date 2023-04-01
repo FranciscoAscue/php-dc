@@ -1,15 +1,17 @@
 <?php include("../../database.php");
+
 $sentencia = $conn->prepare("SELECT * FROM `caracteristicas`");
 $sentencia->execute();
-$lista_caracteristicas = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
-//print_r($lista_caracteristicas)
-if($_GET){
+$lista_caracteristicas = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
-    $textID = (isset($_GET['textID'])?$_GET['textID']:"");
-    $sentencia = $conn -> prepare("DELETE FROM `caracteristicas` WHERE id_puesto = :id;");
-    $sentencia -> bindParam(":id", $textID);
-    $sentencia -> execute();
-    header("Location:index.php");
+if ($_GET['textID']) {
+
+    $textID = (isset($_GET['textID']) ? $_GET['textID'] : "");
+    $sentencia = $conn->prepare("DELETE FROM `caracteristicas` WHERE id_puesto = :id;");
+    $sentencia->bindParam(":id", $textID);
+    $sentencia->execute();
+    $mensaje="Puesto Eliminado!";
+    header("Location:index.php?mensaje=".$mensaje);
 }
 
 
@@ -17,16 +19,14 @@ if($_GET){
 
 <?php include("../../templates/header.php"); ?>
 
-
 <div class="card">
     <div class="card-header">
-        <a name="" id="" class="btn btn-primary" 
-        href="<?php echo $url_base; ?>/modules/caracteristicas/build.php"
+        <a name="" id="" class="btn btn-primary" href="<?php echo $url_base; ?>/modules/caracteristicas/build.php"
             role="button">Agregar Puesto</a>
     </div>
     <div class="card-body">
         <div class="table-responsive-sm">
-            <table class="table">
+            <table class="table" id="tabla_id">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -36,26 +36,28 @@ if($_GET){
                 </thead>
                 <tbody>
 
-                <?php foreach($lista_caracteristicas as $puestos) { ?> 
-                    <tr class="">
-                        <td scope="row"><?php echo $puestos["id_puesto"];?></td>
-                        <td><?php echo $puestos["puesto"] ;?></td>
-                        <td><a name="" id="" class="btn btn-success"
-                                href="/modules/caracteristicas/edit.php?textID=<?php 
-                                echo $puestos['id_puesto']; ?>" role="button">Editar</a>
-                            <a name="" id="" class="btn btn-danger"
-                                href="/modules/caracteristicas/index.php?textID=<?php 
-                                echo $puestos['id_puesto']; ?>" role="button">Eliminar</a>
-                        </td>
-                    </tr>
+                    <?php foreach ($lista_caracteristicas as $puestos) { ?>
+                        <tr class="">
+                            <td scope="row">
+                                <?php echo $puestos["id_puesto"]; ?>
+                            </td>
+                            <td>
+                                <?php echo $puestos["puesto"]; ?>
+                            </td>
+                            <td><a name="" id="" class="btn btn-success" href="/modules/caracteristicas/edit.php?textID=<?php
+                            echo $puestos['id_puesto']; ?>" role="button">Editar</a>
+                                <a name="" id="" class="btn btn-danger"
+                                    href="javascript:borrar(<?php echo $puestos['id_puesto']; ?>)"
+                                    role="button">Eliminar</a>
+                            </td>
+                        </tr>
 
-                <?php }?>
+                    <?php } ?>
 
                 </tbody>
             </table>
         </div>
     </div class="card-body">
 </div>
-
 
 <?php include("../../templates/footer.php"); ?>

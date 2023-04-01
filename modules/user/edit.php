@@ -25,7 +25,8 @@ if ($_POST) {
     $sentencia->bindParam(":correo", $emailusuario);
     $sentencia->bindParam(":id", $id);
     $sentencia->execute();
-    header("Location:index.php");
+    $mensaje="Usuario actualizado!";
+    header("Location:index.php?mensaje=".$mensaje);
 }
 
 ?>
@@ -67,8 +68,10 @@ if ($_POST) {
             </div>
         
            <button type="submit" class="btn btn-success">Actualizar</button>
-            <a name="" id="" class="btn btn-danger" 
-            href="<?php echo $url_base;?>/modules/user/index.php" role="button">Cancelar</a>
+            
+           <a name="" id="" class="btn btn-danger" 
+            href="<?php echo $url_base;?>/modules/user/index.php" 
+            role="button">Cancelar</a>
         </form>
     </div>
     <div class="card-footer text-muted">
