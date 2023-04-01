@@ -1,6 +1,11 @@
 <?php
-$url_base = 'http://localhost:3000/'
-    ?>
+$url_base = 'http://localhost:3000/';
+session_start();
+
+if(!isset($_SESSION["usuario"])){
+    header("Location:".$url_base."login.php");
+}
+?>
 
 <!doctype html>
 <html lang="en">
@@ -43,7 +48,7 @@ $url_base = 'http://localhost:3000/'
                 <a class="nav-link" href="<?php echo $url_base; ?>modules/user/index.php">Users</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Log Out</a>
+                <a class="nav-link" href="<?php echo $url_base; ?>cerrar.php"">Log Out</a>
             </li>
         </ul>
     </nav>

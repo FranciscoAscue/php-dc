@@ -1,5 +1,7 @@
 <?php include("../../database.php");
 
+print_r($_GET);
+
 if ($_POST) {
     print_r($_POST);
 
