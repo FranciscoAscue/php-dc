@@ -1,9 +1,7 @@
 <?php include("../../database.php");
-
-print_r($_GET);
+error_reporting(0);
 
 if ($_POST) {
-    print_r($_POST);
 
     $nombreusuario = (isset($_POST['nombreusuario']) ? $_POST['nombreusuario'] : "");
     $passwordusuario = (isset($_POST['passwordusuario']) ? $_POST['passwordusuario'] : "");

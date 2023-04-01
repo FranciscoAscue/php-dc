@@ -1,9 +1,9 @@
 <?php
 // detalles de conexión
-$host = 'localhost';
+$host = 'mysql_db';
 $dbname = 'database';
-$username = 'admin';
-$password = '@123a456#';
+$username = 'root';
+$password = 'root';
 
 // intentar conectar con la base de datos
 try {

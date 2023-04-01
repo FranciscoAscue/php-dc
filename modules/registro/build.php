@@ -1,4 +1,5 @@
 <?php include("../../database.php");
+error_reporting(0);
 
 
 $sentencia = $conn->prepare("SELECT * FROM `caracteristicas`");
@@ -6,9 +7,7 @@ $sentencia->execute();
 $lista_puesto = $sentencia -> fetchAll(PDO::FETCH_ASSOC);
 
 if($_POST){
-    print_r($_POST);
-    print_r($_FILES);
-
+  
     $nombre = (isset($_POST['nombre'])?$_POST['nombre']:"");
 
     $foto = (isset($_FILES['foto']['name'])?$_FILES['foto']['name']:"");

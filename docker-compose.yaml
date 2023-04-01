@@ -1,10 +1,32 @@
-version: '3.8'
+version: '2.1'
 services:
   # PHP service
-  app:
+  php_env:
+    build: .
+    depends_on:
+      - mysql_db
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - 3000:80
+    stdin_open: true
+
   # MYSQL database service
-  db:
-  # PHPmyadmin
-  phpmyadmin:
-  # nginx
+  mysql_db:
+    image: mysql:latest
+    ports:
+      - 9906:3306
+    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
+    # (this is just an example, not intended to be a production configuration)
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
   
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1

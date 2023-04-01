@@ -1,10 +1,14 @@
 <?php
+error_reporting(0);
+
 $url_base = 'http://localhost:3000/';
 session_start();
 
 if(!isset($_SESSION["usuario"])){
     header("Location:".$url_base."login.php");
 }
+
+
 ?>
 
 <!doctype html>

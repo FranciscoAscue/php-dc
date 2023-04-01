@@ -1,10 +1,10 @@
 <?php
 
 session_start();
-
+include("./database.php");
 if ($_POST) {
 
-    include("./database.php");
+    
     $sentencia = $conn->prepare("SELECT * FROM `users` 
     WHERE `nombre`=:usuario AND `password`=:pass ;");
 

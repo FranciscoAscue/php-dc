@@ -1,4 +1,5 @@
 <?php include("../../database.php");
+error_reporting(0);
 
 $sentencia = $conn->prepare("SELECT * FROM `users`");
 $sentencia->execute();

@@ -1,7 +1,7 @@
 <?php include("../../database.php");
+error_reporting(0);
 
 if($_POST){
-    print_r($_POST);
 
     $nombrepuesto = (isset($_POST['nombrepuesto'])?$_POST['nombrepuesto']:"");
 
