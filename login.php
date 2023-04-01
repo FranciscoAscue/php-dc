@@ -18,6 +18,8 @@ if ($_POST) {
         $_SESSION['usuario']=$lista_usuario['nombre'];
         $_SESSION['logueado']=true;
         header("Location:index.php");
+    }else{
+        $mensaje = "El usuario o contraseña es incorrecto";
     }
 }
 
@@ -79,8 +81,16 @@ if ($_POST) {
                                 class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                                 <p class="lead fw-normal mb-0 me-3">Ingrese al Sistema</p>
 
+                          
+
                             </div>
                             <br />
+                            <?php if(isset($mensaje)){ ?>
+                            <div class="alert alert-danger" role="alert">
+                                <strong><?php echo $mensaje;?></strong>
+                            </div>
+                            <?php }?>
+
                             <!-- Email input -->
                             <div class="form-outline mb-4">
                                 <input type="text" id="usuario" name="usuario" 
